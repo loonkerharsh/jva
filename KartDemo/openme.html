@@ -154,6 +154,24 @@
         transform: translate(-50%, -50%);
       }
     }
+
+    @keyframes confetti {
+      0% {
+        transform: translateY(0);
+      }
+      100% {
+        transform: translateY(100vh) rotate(360deg);
+      }
+    }
+
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background-color: #ff4da6;
+      animation: confetti 4s linear infinite;
+      opacity: 0.8;
+    }
   </style>
 </head>
 <body>
@@ -181,23 +199,37 @@
   <div class="heart" style="top: 90%; left: 70%; animation-delay: 3s;"></div>
   <div class="heart" style="top: 90%; left: 90%; animation-delay: 4s;"></div>
 
+  <!-- Background Music -->
+  <audio id="bgMusic" loop>
+    <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <!-- Confetti -->
+  <div id="confettiContainer"></div>
+
   <script>
     const modal = document.getElementById("myModal");
     const overlay = document.getElementById("overlay");
     const noButton = document.getElementById("noButton");
+    const bgMusic = document.getElementById("bgMusic");
+    const confettiContainer = document.getElementById("confettiContainer");
 
     function showModal() {
       modal.style.display = "block";
       overlay.style.display = "block";
+      bgMusic.play();
     }
 
     function closeModal() {
       modal.style.display = "none";
       overlay.style.display = "none";
+      bgMusic.pause();
     }
 
     function confirmCuddle() {
       alert("I can't wait! Let's snuggle and make it magical! 💞");
+      triggerConfetti();
       closeModal();
     }
 
@@ -205,6 +237,18 @@
       const randomX = Math.random() * 200 - 100; // Random x-axis movement
       const randomY = Math.random() * 100 - 50;  // Random y-axis movement
       noButton.style.transform = `translate(${randomX}px, ${randomY}px)`;
+    }
+
+    function triggerConfetti() {
+      for (let i = 0; i < 100; i++) {
+        const confetti = document.createElement('div');
+        confetti.classList.add('confetti');
+        confetti.style.left = Math.random() * window.innerWidth + 'px';
+        confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 75%)`;
+        confettiContainer.appendChild(confetti);
+
+        setTimeout(() => confetti.remove(), 4000);
+      }
     }
   </script>
 </body>
