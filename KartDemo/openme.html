@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Romantic Pop-Up</title>
+  <style>
+    /* General Styles */
+    body {
+      font-family: 'Georgia', serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background: linear-gradient(135deg, #ffb3d9, #ff66b2); /* Romantic gradient */
+      overflow: hidden;
+    }
+
+    /* Floating Hearts */
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: #ff4da6;
+      transform: rotate(45deg);
+      animation: floatUp 5s infinite ease-in-out;
+    }
+
+    .heart:before,
+    .heart:after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: #ff4da6;
+      border-radius: 50%;
+    }
+
+    .heart:before {
+      top: -10px;
+      left: 0;
+    }
+
+    .heart:after {
+      left: -10px;
+      top: 0;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(-100vh) scale(0.5);
+        opacity: 0;
+      }
+    }
+
+    /* Modal Styles */
+    #myModal {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 400px;
+      background: rgba(255, 255, 255, 0.9); /* Soft white with transparency */
+      box-shadow: 0 8px 20px rgba(255, 105, 180, 0.6); /* Pink glow */
+      border-radius: 20px;
+      text-align: center;
+      overflow: hidden;
+      animation: fadeIn 0.5s ease-out;
+      z-index: 1000;
+    }
+
+    #myModal header {
+      background-color: #ff85c2; /* Warm pink for header */
+      color: white;
+      padding: 20px;
+      font-size: 24px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    #myModal .content {
+      padding: 25px;
+      font-size: 18px;
+      color: #cc0066; /* Deep romantic pink */
+      line-height: 1.6;
+      font-style: italic;
+    }
+
+    #myModal footer {
+      padding: 20px;
+      display: flex;
+      justify-content: space-around;
+      background-color: #fff0f5; /* Light romantic pink */
+    }
+
+    #myModal button {
+      padding: 10px 30px;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 18px;
+      transition: transform 0.2s ease, background-color 0.3s ease;
+    }
+
+    #yesButton {
+      background-color: #ff4da6;
+      color: white;
+    }
+
+    #yesButton:hover {
+      transform: scale(1.1);
+      background-color: #ff1a8c; /* Spicier pink */
+    }
+
+    #noButton {
+      position: relative;
+      background-color: #ffe6f2;
+      color: #ff4da6;
+      border: 2px solid #ff4da6;
+    }
+
+    /* Overlay */
+    #overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      z-index: 999;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translate(-50%, -60%);
+      }
+      to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+      }
+    }
+  </style>
+</head>
+<body>
+  <button onclick="showModal()" style="padding: 12px 25px; font-size: 18px; border-radius: 25px; background-color: #ff4da6; color: white; border: none; cursor: pointer;">💖 Ask the Question 💖</button>
+
+  <!-- Modal -->
+  <div id="overlay"></div>
+  <div id="myModal">
+    <header>
+      <span>❤️</span> My Darling Question <span>❤️</span>
+    </header>
+    <div class="content">
+      Wanna cuddle until we fall asleep holding each other, feeling our hearts beat as one? 🥰
+    </div>
+    <footer>
+      <button id="yesButton" onclick="confirmCuddle()">Yes, my love</button>
+      <button id="noButton" onmouseover="moveNoButton()">Not tonight</button>
+    </footer>
+  </div>
+
+  <!-- Floating Hearts -->
+  <div class="heart" style="top: 90%; left: 10%; animation-delay: 0s;"></div>
+  <div class="heart" style="top: 90%; left: 30%; animation-delay: 1s;"></div>
+  <div class="heart" style="top: 90%; left: 50%; animation-delay: 2s;"></div>
+  <div class="heart" style="top: 90%; left: 70%; animation-delay: 3s;"></div>
+  <div class="heart" style="top: 90%; left: 90%; animation-delay: 4s;"></div>
+
+  <script>
+    const modal = document.getElementById("myModal");
+    const overlay = document.getElementById("overlay");
+    const noButton = document.getElementById("noButton");
+
+    function showModal() {
+      modal.style.display = "block";
+      overlay.style.display = "block";
+    }
+
+    function closeModal() {
+      modal.style.display = "none";
+      overlay.style.display = "none";
+    }
+
+    function confirmCuddle() {
+      alert("I can't wait! Let's snuggle and make it magical! 💞");
+      closeModal();
+    }
+
+    function moveNoButton() {
+      const randomX = Math.random() * 200 - 100; // Random x-axis movement
+      const randomY = Math.random() * 100 - 50;  // Random y-axis movement
+      noButton.style.transform = `translate(${randomX}px, ${randomY}px)`;
+    }
+  </script>
+</body>
+</html>
